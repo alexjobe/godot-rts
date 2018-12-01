@@ -1,11 +1,15 @@
 extends Camera2D
 
+export var panspeed = 30.0
 export var speed = 30.0
 export var zoomspeed = 20.0
 
 export var zoomMin = 0.5
-export var zoomMax = 2
+export var zoomMax = 2.0
+export var marginX = 200.0
+export var marginY = 100.0
 
+var mousepos = Vector2()
 var zoompos = Vector2()
 var zoomfactor = 1.0
 var zooming = false
@@ -24,6 +28,21 @@ func _process(delta):
 	
 	position.x = lerp(position.x, position.x + input_x * speed * zoom.x, speed * delta)
 	position.y = lerp(position.y, position.y + input_y * speed * zoom.y, speed * delta)
+	
+	
+	# Pan camera when mouse approaches the window border
+	var marginFromRight = OS.window_size.x - marginX
+	var marginFromBottom = OS.window_size.y - marginY
+	
+	if mousepos.x < marginX:
+		position.x = lerp(position.x, position.x - abs(mousepos.x - marginX) / marginX * panspeed * zoom.x, panspeed * delta)
+	elif mousepos.x > marginFromRight:
+		position.x = lerp(position.x, position.x + abs(mousepos.x - marginFromRight) / marginX * panspeed * zoom.x, panspeed * delta)
+		
+	if mousepos.y < marginY:
+		position.y = lerp(position.y, position.y - abs(mousepos.y - marginY) / marginY * panspeed * zoom.x, panspeed * delta)
+	elif mousepos.y > marginFromBottom:
+		position.y = lerp(position.y, position.y + abs(mousepos.y - marginFromBottom) / marginY * panspeed * zoom.x, panspeed * delta)
 	
 	# Camera zoom
 	zoom.x = lerp(zoom.x, zoom.x * zoomfactor, zoomspeed * delta)
@@ -50,7 +69,8 @@ func _input(event):
 		else:
 			zooming = false
 			
-			
+	if event is InputEventMouse:
+		mousepos = event.position
 			
 			
 			
