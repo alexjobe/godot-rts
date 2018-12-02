@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/WorldManager.gd" type="Script" id=1]
 [ext_resource path="res://Tilesets/Tileset_Env.tres" type="TileSet" id=2]
@@ -9,7 +9,13 @@
 [ext_resource path="res://Sprites/UI/red_panel.png" type="Texture" id=7]
 [ext_resource path="res://Scenes/Unit.tscn" type="PackedScene" id=8]
 
-[node name="World" type="Node2D" index="0"]
+[sub_resource type="NavigationPolygon" id=1]
+
+vertices = PoolVector2Array( 280, 300, 280, 210, 1270, -250, 1270, 890, -250, -250, 230, 210, -250, 890, 230, 300 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 2, 1, 5 ), PoolIntArray( 6, 4, 5, 7 ), PoolIntArray( 3, 6, 7, 0 ) ]
+outlines = [ PoolVector2Array( -250, -250, 1270, -250, 1270, 890, -250, 890 ), PoolVector2Array( 230, 210, 230, 300, 280, 300, 280, 210 ) ]
+
+[node name="World" type="Node2D"]
 
 script = ExtResource( 1 )
 
@@ -115,6 +121,7 @@ texture = ExtResource( 6 )
 
 [node name="UI" type="CanvasLayer" parent="." index="4"]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -178,13 +185,23 @@ color = Color( 0, 0.953125, 1, 0.470588 )
 [node name="Unit 1" parent="." index="5" instance=ExtResource( 8 )]
 
 position = Vector2( 160, 192 )
+speed = 100
 
 [node name="Unit 2" parent="." index="6" instance=ExtResource( 8 )]
 
 position = Vector2( 416, 256 )
+speed = 100
 
 [node name="Unit 3" parent="." index="7" instance=ExtResource( 8 )]
 
 position = Vector2( 288, 416 )
+speed = 100
+
+[node name="Nav" type="Navigation2D" parent="." index="8"]
+
+[node name="Polygon" type="NavigationPolygonInstance" parent="Nav" index="0"]
+
+navpoly = SubResource( 1 )
+enabled = true
 
 

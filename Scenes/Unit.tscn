@@ -20,7 +20,7 @@ use_filter = false
 font_data = ExtResource( 6 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Unit" type="KinematicBody2D" groups=[
+[node name="Unit" type="KinematicBody2D" index="0" groups=[
 "units",
 ]]
 
@@ -31,6 +31,7 @@ collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
 _sections_unfolded = [ "Pickable" ]
+speed = 100
 selected = false
 
 [node name="Box" type="Sprite" parent="." index="0"]
