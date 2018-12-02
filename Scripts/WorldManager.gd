@@ -1,7 +1,9 @@
 #WorldManager.gd
 extends Node2D
 
+var units = []
 var selected_units = []
+
 var buttons = []
 
 onready var unit_button = preload("res://Scenes/UnitButton.tscn")
@@ -17,6 +19,10 @@ func deselect_unit(unit):
 		selected_units.erase(unit)
 		print("Deselected %s" % unit.name)
 		create_buttons()
+		
+func deselect_all():
+	while selected_units.size() > 0:
+		selected_units[0].set_selected(false)
 		
 func create_buttons():
 	delete_buttons()
@@ -41,13 +47,38 @@ func was_pressed(obj):
 		if unit.name == obj.name:
 			unit.set_selected(false)
 			break
+			
+func get_units_in_area(area):
+	var u = []
+	for unit in units:
+		if unit.position.x > area[0].x and unit.position.x < area[1].x:
+			if  unit.position.y > area[0].y and unit.position.y < area[1].y:
+				u.append(unit)
+				
+	return u
+	
+func area_selected(obj):
+	var start = obj.start
+	var end = obj.end
+	var area = []
+	
+	area.append(Vector2(min(start.x, end.x), min(start.y, end.y)))
+	area.append(Vector2(max(start.x, end.x), max(start.y, end.y)))
+	
+	var ut = get_units_in_area(area)
+	if not Input.is_key_pressed(KEY_SHIFT):
+		deselect_all()
+	for u in ut:
+		u.selected = not u.selected
 		
 func _ready():
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
-	pass
+	units = get_tree().get_nodes_in_group("units")
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 #	pass
+
+
+func _on_Camera2D_area_selected():
+	pass # replace with function body

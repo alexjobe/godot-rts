@@ -9,7 +9,7 @@
 [ext_resource path="res://Sprites/UI/red_panel.png" type="Texture" id=7]
 [ext_resource path="res://Scenes/Unit.tscn" type="PackedScene" id=8]
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
@@ -92,8 +92,8 @@ speed = 30.0
 zoomspeed = 20.0
 zoomMin = 0.5
 zoomMax = 2.0
-marginX = 200.0
-marginY = 100.0
+marginX = 100.0
+marginY = 50.0
 
 [node name="Building 1" type="Node2D" parent="." index="3"]
 
@@ -158,6 +158,22 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 _sections_unfolded = [ "Patch Margin", "Visibility" ]
+
+[node name="DrawRect" type="ColorRect" parent="UI/Base" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 0, 0.953125, 1, 0.470588 )
 
 [node name="Unit 1" parent="." index="5" instance=ExtResource( 8 )]
 
